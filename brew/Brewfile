@@ -1,0 +1,15 @@
+# Tmux
+brew "tmux"
+
+# jq, a command line JSON editor
+brew "jq"
+
+# Docker image layer inspector
+brew "dive"
+
+# Maven
+brew "maven"
+
+# Go
+brew "go"
+

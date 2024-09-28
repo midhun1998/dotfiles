@@ -2,6 +2,10 @@
 alias vimx='vim'
 alias ll='ls -latr'
 
+# Brew
+alias bbic="brew update &&\
+    brew bundle install --cleanup --file=~/.Brewfile --no-lock &&\
+    brew upgrade"
 # Tmux
 alias t='tmux'
 alias tn='tmux new -s'

@@ -69,23 +69,22 @@ then
 		echo "$(check_if_dir_exists '/home/linuxbrew/.linuxbrew')"
 		INSTALL_BREW=1
 	else
-		banner_skip 'Homebrew'
-	fi
-else
-	if [[ "${PLATFORM}" == "arm64" ]] 
-	then
-		if [[ "$(check_if_dir_exists '/opt/homebrew')" == "false" ]]
+		
+		if [[ "${PLATFORM}" == "arm64" ]] 
 		then
-			INSTALL_BREW=1
+			if [[ "$(check_if_dir_exists '/opt/homebrew')" == "false" ]]
+			then
+				INSTALL_BREW=1
+			else
+				banner_skip 'Homebrew'
+			fi	
 		else
-			banner_skip 'Homebrew'
-		fi	
-	else
-		if [[ "$(check_if_dir_exists '/usr/local/Homebrew')" == "false" ]]
-		then
-			INSTALL_BREW=1
-		else
-			banner_skip 'Homebrew'
+			if [[ "$(check_if_dir_exists '/usr/local/Homebrew')" == "false" ]]
+			then
+				INSTALL_BREW=1
+			else
+				banner_skip 'Homebrew'
+			fi
 		fi
 	fi
 fi
@@ -98,7 +97,7 @@ banner_pre 'Oh My Zsh!'
 
 if [[ "$(check_if_file_exists $HOME/.oh-my-zsh/oh-my-zsh.sh)"  == "false" ]] 
 then
-	bash -c "curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	banner_post 'Oh My Zsh!'
 else
 	banner_skip 'Oh My Zsh!'
@@ -131,8 +130,12 @@ fi
 
 banner_pre 'Tmux'
 
+set +e
 tmux -c echo 1> /dev/null 2> /dev/null
-[ $? -gt 0 ] && brew install tmux && banner_post 'Tmux' || banner_skip 'Tmux'
+_ec=$?
+set -e
+
+[ $_ec -gt 0 ] && brew install tmux && banner_post 'Tmux' || banner_skip 'Tmux'
 
 # Install Vundle
 
@@ -140,8 +143,7 @@ banner_pre 'Vundle'
 
 if [[ "$(check_if_dir_exists $HOME/.vim/bundle/Vundle.vim)" == "false" ]]
 then
-	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim --single-branch
---depth=1
+	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim --single-branch --depth=1
 	banner_post 'Vundle'
 else
 	banner_skip 'Vundle'

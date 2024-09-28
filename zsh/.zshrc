@@ -130,3 +130,9 @@ antigen bundle zsh-users/zsh-completions 1> /dev/null
 antigen bundle zsh-users/zsh-autosuggestions 1> /dev/null
 
 antigen apply
+
+# Set ENV variables
+export JAVA_HOME="$HOME/workspace/binary-installations/openjdk_21.0.2.0.101_21.33.14_aarch64"
+export GOPATH=$(go env GOPATH)
+export GOBIN=$GOPATH/bin
+export PATH="$JAVA_HOME/bin:$GOBIN:$HOME/overriden-bins:$PATH"
