@@ -1,6 +1,7 @@
 # General
 alias vimx='vim'
 alias ll='ls -latr'
+alias sz='source $HOME/.zshrc'
 
 # Brew
 alias bbic="brew update &&\

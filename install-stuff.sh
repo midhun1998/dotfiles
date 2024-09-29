@@ -168,3 +168,12 @@ fi
 #popd 1> /dev/null
 #popd 1> /dev/null
 #
+
+# Create dirs for configuration
+mkdir -p /tmp/.vim-backup
+mkdir -p /tmp/.vim-undobackup
+
+
+
+
+

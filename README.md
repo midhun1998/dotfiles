@@ -18,4 +18,27 @@ $ ./configure && make
 ```
 -->
 
+# Configure iTerm2
+I would suggest importing profile as JSON from iTerm2 folder if you want it to be the same.
 
+## Font
+### Size
+By default, iTerm2 has really small font size. To configure the fonts and font-size go to
+```
+iTerm2 -> Settings -> Profiles -> Default -> Text -> Set font size to 15 
+```
+
+### Font Family
+I use Powerlevel10k theme so for its compatibility for Mac we need to use `MesloLGS NF` (this is installed as part of `install.sh` if not kick-off `p10k configure` command) and for Linux/WSL I prefer
+`Firacode NF` patched font from
+[here](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode) 
+
+## Colorscheme
+I prefer Dracula+ from https://iterm2colorschemes.com/
+
+## Enable Status Bar for CPU and Memory Usage Tracking
+`Go to iTerm2 Settings -> Profiles -> Default -> Session -> Status Bar Enabled`
+
+## Command + Backspace Keymap
+`Go to iTerm2 Settings -> Profiles -> Default -> Keys -> Configure Command + Backspace to send 0x17
+Hexcode`

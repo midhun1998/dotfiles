@@ -13,7 +13,15 @@ set spell spelllang=en_us
 set autochdir
 set undofile
 set encoding=utf-8
-set clipboard=unnamedplus
+set backupdir=/tmp/.vim-backup
+set undodir=/tmp/.vim-undobackup
+colorscheme slate
+
+if has('mac')
+  set clipboard=unnamed
+elseif has('unix')
+  set clipboard=unnamedplus
+endif
 
 filetype off                  " required
 
@@ -34,7 +42,6 @@ Plugin 'elzr/vim-json'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-
 
 " go to the middle of the line using gm
 nnoremap gm :call cursor(0, len(getline('.'))/2)<CR>
