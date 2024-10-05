@@ -1,7 +1,14 @@
 # General
+alias clear='clear -x'
 alias vimx='vim'
-alias ll='ls -latr'
-alias sz='source $HOME/.zshrc'
+alias ll='ls -latrh'
+alias szrc='source $HOME/.zshrc'
+alias zshrc='vim ~/.zshrc && szrc'
+alias ealias='vim ~/.oh-my-zsh/custom/general-aliases.zsh && szrc'
+alias brewfile='vim ~/.Brewfile && bbic'
+alias activate='. venv/bin/activate'
+alias build_devc='docker buildx build . --platform linux/amd64 -t docker.repo.local.sfdc.net/docker-dev-local-1/mrnair/dev-container:latest'
+alias push_devc='docker push docker.repo.local.sfdc.net/docker-dev-local-1/mrnair/dev-container:latest'
 
 # Brew
 alias bbic="brew update &&\

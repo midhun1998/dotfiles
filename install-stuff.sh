@@ -172,8 +172,4 @@ fi
 # Create dirs for configuration
 mkdir -p /tmp/.vim-backup
 mkdir -p /tmp/.vim-undobackup
-
-
-
-
-
+mkdir -p /tmp/zcomp-dump

@@ -11,6 +11,7 @@ source "$HOME/antigen.zsh"
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
+export ZSH_COMPDUMP="/tmp/zcomp-dump/zcomp-dump.$(hostname)"
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -124,6 +125,9 @@ export EDITOR='vim'
 #	eval $(ssh-agent) && ssh-add
 #fi
 
+# Hook direnv
+eval "$(direnv hook zsh)"
+
 # Antigen plugins
 antigen bundle zdharma-continuum/fast-syntax-highlighting 1> /dev/null
 antigen bundle zsh-users/zsh-completions 1> /dev/null
@@ -136,3 +140,52 @@ export JAVA_HOME="$HOME/workspace/binary-installations/openjdk_21.0.2.0.101_21.3
 export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
 export PATH="$JAVA_HOME/bin:$GOBIN:$HOME/overriden-bins:$PATH"
+
+# Custom functions
+
+create_venv() {
+# Creates a instant venv
+python_version="$1"
+echo "\033[32mINFO::Creating a $python_version venv and activating it...\033[0m" 
+${python_version:-python3} -m venv venv --without-pip --system-site-packages
+activate
+}
+
+start_devc() {
+# Starts Dev container for AMD64 platform
+
+restart="$1"
+if [ -n "$restart" ]
+then
+	echo "\033[91mINFO::Killing previously running container...\033[0m"
+	docker stop dev 1> /dev/null
+	docker rm -f dev 1> /dev/null
+fi
+echo "\033[32mINFO::Starting new 'dev' container. You will be attached to the terminal soon...\033[0m"
+container_id=$(docker run \
+	--platform linux/amd64 \
+	--name 'dev' \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v ~/.ssh:/root/.ssh \
+	-v ~/Documents/sf-config-bkp/.m2/settings.xml:/root/.m2/settings.xml \
+	-v $PWD:/mnt/workspace \
+	-v ~/Documents/sf-config-bkp/mountable-config/.bashrc:/root/.bashrc \
+	-d \
+	-w /mnt/workspace \
+	docker.repo.local.sfdc.net/docker-dev-local-1/mrnair/dev-container:latest \
+	/bin/bash -c 'sleep infinity' | xargs)
+
+docker exec -it $container_id /bin/bash
+}
+
+attach_devc() {
+echo "\033[32mINFO::Trying to attach you to already running container...\033[0m"
+if [ -n "$(docker ps --filter name=dev -q)" ]
+then
+	docker exec -it dev /bin/bash
+else
+	echo "\033[91mINFO::Dev container is unavailable\033[0m"
+	start_devc 1
+fi
+}
+

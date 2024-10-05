@@ -13,3 +13,8 @@ brew "maven"
 # Go
 brew "go"
 
+# gh - GitHub command-line
+brew "gh"
+
+# direnv - Load/unload env vars based on PWD
+brew "direnv"
